@@ -8,12 +8,7 @@ pipeline {
     }
 
     stages {
-        stage ('clone Repo') {
-            steps {
-                git 'https://github.com/Divyansh6168/AWS-Jenkins-Flask.git'
-            }
-        }
-
+        
         stage ('Install Dependencies') {
             steps {
                 sh 'pip install flask pytest'
