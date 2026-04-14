@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10-slim'
+            args '-u root'
+            reuseNode true
+        }
+    }
 
     stages {
         stage ('clone Repo') {
@@ -8,21 +14,15 @@ pipeline {
             }
         }
 
-        stage ('Build Docker Image') {
+        stage ('Install Dependencies') {
             steps {
-                script {
-                    docker.build("flask-app-test")
-                }
+                sh 'pip install flask pytest'
             }
         }
 
         stage('Run Tests') {
             steps {
-                script {
-                    docker.image("flask-app-test").inside {
-                        sh 'pytest'
-                    }
-                }
+                sh 'pytest'
             }
         }
     }
