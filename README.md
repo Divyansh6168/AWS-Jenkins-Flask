@@ -131,6 +131,7 @@ Access:
 
     http://<EC2-PUBLIC-IP>:8080
 Note:
+
     Check the security group inbound rules, add Port: 8080.
 ------------------------------------------------------------------------
 
