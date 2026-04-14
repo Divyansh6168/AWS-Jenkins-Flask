@@ -19,7 +19,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    socker.image("flask-app-test").inside {
+                    docker.image("flask-app-test").inside {
                         sh 'pytest'
                     }
                 }
