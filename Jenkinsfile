@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage ('clone Repo') {
             steps {
-                git clone 'https://github.com/Divyansh6168/AWS-Jenkins-Flask.git'
+                git 'https://github.com/Divyansh6168/AWS-Jenkins-Flask.git'
             }
         }
 
