@@ -42,7 +42,7 @@ pipeline {
         stage ('Deploy') {
             agent {
                 docker {
-                    image 'python:3.10-slim'
+                    image 'node:latest'
                     args '-u root'
                     reuseNode true
                 }
