@@ -42,7 +42,7 @@ pipeline {
         stage ('Deploy') {
             agent {
                 docker {
-                    image 'node:latest'
+                    image 'node:20-bookworm-slim'
                     args '-u root'
                     reuseNode true
                 }
@@ -50,6 +50,7 @@ pipeline {
 
             steps {
                 sh '''
+                    npm --version
                     npm install -g vercel
                 '''
             }
