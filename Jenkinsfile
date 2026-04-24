@@ -1,17 +1,42 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10-slim'
-            args '-u root'
-            reuseNode true
-        }
+    agent any
+    options {
+        skipDefaultCheckout(true)
     }
 
     stages {
 
+        stage (' Clean up code '){
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Checkout using scm'){
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build'){
+            agent {
+                docker {
+                    image 'python:3.10-slim'
+                    args '-u root'
+                    reuseNode true
+                }
+            }
+        }
+
         stage ('Install Dependencies') {
             steps {
-                sh 'pip install flask pytest'
+                sh '''
+                    pip install -r requirements.txt
+                    ls -l
+                    python --version
+                    flask --version
+                    
+                '''
             }
         }
 
