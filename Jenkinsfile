@@ -38,6 +38,22 @@ pipeline {
                 '''
             }
         }
+
+        stage ('Deploy') {
+            agent {
+                docker {
+                    image 'python:3.10-slim'
+                    args '-u root'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                sh '''
+                    npm install -g vercel
+                '''
+            }
+        }
     }
 
     post {
