@@ -1,24 +1,25 @@
 pipeline {
     agent any
+
     options {
         skipDefaultCheckout(true)
     }
 
     stages {
 
-        stage (' Clean up code '){
+        stage('Clean up code') {
             steps {
                 cleanWs()
             }
         }
 
-        stage('Checkout using scm'){
+        stage('Checkout using scm') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Build'){
+        stage('Build and Test') {
             agent {
                 docker {
                     image 'python:3.10-slim'
@@ -26,30 +27,22 @@ pipeline {
                     reuseNode true
                 }
             }
-        }
 
-        stage ('Install Dependencies') {
             steps {
                 sh '''
                     pip install -r requirements.txt
                     ls -l
                     python --version
                     flask --version
-                    
+                    pytest
                 '''
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'pytest'
             }
         }
     }
 
     post {
         success {
-            echo 'Tests Passes!'
+            echo 'Tests Passed!'
         }
         failure {
             echo 'Tests Failed!'
