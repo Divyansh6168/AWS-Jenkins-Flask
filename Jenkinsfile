@@ -56,7 +56,7 @@ pipeline {
                 sh '''
                     npm --version
                     
-                    npx vercel pull --yes --environment=production --token-$VERCEL_TOKEN
+                    npx vercel pull --yes --environment=production --token=$VERCEL_TOKEN
                     npx vercel build --prod --token=$VERCEL_TOKEN
                     npx vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
                 '''
