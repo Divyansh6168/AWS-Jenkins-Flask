@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage ('Deploy') {
+        stage('Deploy') {
             agent {
                 docker {
                     image 'node:20-bookworm-slim'
@@ -55,10 +55,10 @@ pipeline {
             steps {
                 sh '''
                     npm --version
-                    npm install -g vercel
-                    vercel pull --yes --enviornment=production --token-$VERCEL_TOKEN
-                    vercel build --prod --token=$VERCEL_TOKEN
-                    vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+                    
+                    npx vercel pull --yes --environment=production --token-$VERCEL_TOKEN
+                    npx vercel build --prod --token=$VERCEL_TOKEN
+                    npx vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
                 '''
             }
         }
