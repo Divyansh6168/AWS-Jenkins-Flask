@@ -42,7 +42,7 @@ pipeline {
         stage('Deploy') {
             agent {
                 docker {
-                    image 'node:20-bookworm-slim'
+                    image 'python:3.10'
                     args '-u root'
                     reuseNode true
                 }
@@ -54,8 +54,13 @@ pipeline {
 
             steps {
                 sh '''
+                    apt-get update
+                    apt-get install -y nodejs npm curl
+
+                    pip install uv
+                    node --version
                     npm --version
-                    
+
                     npx vercel pull --yes --environment=production --token=$VERCEL_TOKEN
                     npx vercel build --prod --token=$VERCEL_TOKEN
                     npx vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
