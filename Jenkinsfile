@@ -48,7 +48,7 @@ pipeline {
                 }
             }
 
-            envoirnment {
+            environment {
                 VERCEL_TOKEN = credentials('vercel-token')
             }
 
