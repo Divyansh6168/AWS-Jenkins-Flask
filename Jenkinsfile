@@ -48,10 +48,17 @@ pipeline {
                 }
             }
 
+            envoirnment {
+                VERCEL_TOKEN = credentials('vercel-token')
+            }
+
             steps {
                 sh '''
                     npm --version
                     npm install -g vercel
+                    vercel pull --yes --enviornment=production --token-$VERCEL_TOKEN
+                    vercel build --prod --token=$VERCEL_TOKEN
+                    vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
                 '''
             }
         }
@@ -59,10 +66,10 @@ pipeline {
 
     post {
         success {
-            echo 'Tests Passed!'
+            echo 'All Clear!'
         }
         failure {
-            echo 'Tests Failed!'
+            echo 'Something Failed!'
         }
     }
 }
